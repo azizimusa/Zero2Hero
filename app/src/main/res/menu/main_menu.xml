@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created by azizimusa at 9/15/20 5:51 PM
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/setting"
+        app:showAsAction="always"
+        android:icon="@drawable/baseline_filter_vintage_white_36"
+        android:title="Setting" />
+
+</menu>

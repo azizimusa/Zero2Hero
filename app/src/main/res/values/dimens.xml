@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created by azizimusa at 9/15/20 6:06 PM
+  -->
+
+<resources>
+    <dimen name="ic">30dp</dimen>
+    <dimen name="smallAvatar">50dp</dimen>
+    <dimen name="largeAvatar">80dp</dimen>
+    <dimen name="pcard_ind_header_height">60dp</dimen>
+    <dimen name="pcard_ind_footer_height">60dp</dimen>
+    <dimen name="pcard_ind_header_height_2x">120dp</dimen>
+    <dimen name="pcard_ind_desc_height">180dp</dimen>
+    <dimen name="pcard_ind_bg_height">360dp</dimen>
+</resources>

@@ -57,6 +57,10 @@ dependencies {
     //Simple Logging
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
+    //Image Processing
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
     //Unit Test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
