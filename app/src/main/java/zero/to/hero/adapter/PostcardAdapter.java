@@ -97,8 +97,8 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.ViewHo
                     int width = mp.getVideoWidth();
                     int height = mp.getVideoHeight();
 
-                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width, height); // or set height to any fixed value you want
-                    holder.viewBinding.mediaLayout.setLayoutParams(lp);
+//                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width, height); // or set height to any fixed value you want
+//                    holder.viewBinding.mediaLayout.setLayoutParams(lp);
                 }
             });
             holder.viewBinding.videoView.start();

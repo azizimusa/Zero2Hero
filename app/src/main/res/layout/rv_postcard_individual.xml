@@ -52,7 +52,6 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:id="@+id/mediaLayout"
-                android:background="#f33"
                 android:layout_width="match_parent"
                 android:layout_height="1047px">
 
