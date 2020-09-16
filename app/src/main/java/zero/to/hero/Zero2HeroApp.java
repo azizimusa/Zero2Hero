@@ -1,6 +1,7 @@
 package zero.to.hero;
 
 import android.content.SharedPreferences;
+import android.os.StrictMode;
 
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
@@ -51,6 +52,7 @@ public class Zero2HeroApp extends Application {
                 .addSQLMonitor()
                 .addEnvironmentMonitor()
                 .run("android_NzM3Zjk3ZDUtOWM5MS00MmY1LWEzMzQtZDM3ZWU5OGZjNjlk");
+
     }
 
     public RestApi getRestApi() {

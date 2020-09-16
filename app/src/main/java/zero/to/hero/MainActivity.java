@@ -3,20 +3,36 @@ package zero.to.hero;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.media.MediaMetadataRetriever;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.google.gson.Gson;
+
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import timber.log.Timber;
+import zero.to.hero.adapter.PostcardAdapter;
+import zero.to.hero.databinding.ActivityMainBinding;
 import zero.to.hero.pojo.PostcardPojo;
 
 /**
@@ -24,11 +40,15 @@ import zero.to.hero.pojo.PostcardPojo;
  */
 
 public class MainActivity extends AppCompatActivity {
+    ActivityMainBinding viewBinding;
+    private PostcardAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        viewBinding.setVm(this);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_toolbar);
@@ -41,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<PostcardPojo> call, Response<PostcardPojo> response) {
 
                 Timber.e(new Gson().toJson(response.body()));
+                initRV(response.body().getData());
 
             }
 
@@ -54,15 +75,28 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void initRV(List<PostcardPojo.Datum> response) {
+        adapter = new PostcardAdapter(this, response);
+        viewBinding.rv.setAdapter(adapter);
+        viewBinding.rv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if (item.getItemId() == R.id.setting) {
-            Timber.e("setting opened");
-            return true;
+        switch (item.getItemId()) {
+            case R.id.item1:
+                Toast.makeText(this, "Span 1", Toast.LENGTH_LONG).show();
+                viewBinding.rv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+                return true;
+            case R.id.item2:
+                Toast.makeText(this, "Span 2", Toast.LENGTH_LONG).show();
+                viewBinding.rv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
 
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

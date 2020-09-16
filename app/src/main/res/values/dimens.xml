@@ -4,9 +4,9 @@
   -->
 
 <resources>
-    <dimen name="ic">30dp</dimen>
-    <dimen name="smallAvatar">50dp</dimen>
-    <dimen name="largeAvatar">80dp</dimen>
+    <dimen name="ic">15dp</dimen>
+    <dimen name="smallAvatar">25dp</dimen>
+    <dimen name="largeAvatar">40dp</dimen>
     <dimen name="pcard_ind_header_height">60dp</dimen>
     <dimen name="pcard_ind_footer_height">60dp</dimen>
     <dimen name="pcard_ind_header_height_2x">120dp</dimen>
