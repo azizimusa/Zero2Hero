@@ -3,6 +3,7 @@ package zero.to.hero;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -42,6 +43,7 @@ import zero.to.hero.pojo.PostcardPojo;
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding viewBinding;
     private PostcardAdapter adapter;
+    TextView count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_toolbar);
         TextView tt = getSupportActionBar().getCustomView().findViewById(R.id.title);
+        count = getSupportActionBar().getCustomView().findViewById(R.id.count);
         tt.setText("MyPostcards");
 
         Call<PostcardPojo> call = Zero2HeroApp.getInstance().getRestApi().getPostcards(Utils.getToken());
@@ -79,20 +82,22 @@ public class MainActivity extends AppCompatActivity {
         adapter = new PostcardAdapter(this, response);
         viewBinding.rv.setAdapter(adapter);
         viewBinding.rv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+
+        count.setText(String.valueOf(adapter.getItemCount()));
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.item1:
-                Toast.makeText(this, "Span 1", Toast.LENGTH_LONG).show();
-                viewBinding.rv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-                return true;
-            case R.id.item2:
-                Toast.makeText(this, "Span 2", Toast.LENGTH_LONG).show();
-                viewBinding.rv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-                return true;
+//            case R.id.item1:
+//                Toast.makeText(this, "Span 1", Toast.LENGTH_LONG).show();
+//                viewBinding.rv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+//                return true;
+//            case R.id.item2:
+//                Toast.makeText(this, "Span 2", Toast.LENGTH_LONG).show();
+//                viewBinding.rv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,9 @@ import com.bumptech.glide.request.transition.Transition;
 
 import java.lang.ref.WeakReference;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import timber.log.Timber;
 import zero.to.hero.R;
@@ -53,35 +56,34 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.ViewHo
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
         PostcardPojo.Datum pojo = postcardPojos.get(position);
-        String fileExtension = pojo.getBackgroundUrl().substring(pojo.getBackgroundUrl().lastIndexOf(".") + 1);
 
         if (pojo.getType().equalsIgnoreCase("WP")) {
+            holder.viewBinding.name.setText(pojo.getName());
             Glide.with(context).load(pojo.getIcon()).circleCrop().into(holder.viewBinding.smallAvatar);
+
+            String headerColor = pojo.getColor().getBar().getTop();
+            holder.viewBinding.header.setBackgroundColor(Color.parseColor(headerColor));
+
+            String bodyColor = pojo.getColor().getBar().getBottom();
+            holder.viewBinding.descBody.setBackgroundColor(Color.parseColor(bodyColor));
         } else {
+            holder.viewBinding.name.setText(pojo.getCoName());
             Glide.with(context).load(pojo.getCoIcon()).circleCrop().into(holder.viewBinding.smallAvatar);
-            Glide.with(context).load(pojo.getIcon()).circleCrop().into(holder.viewBinding.largeAvatar);
+
+            String bodyColor = pojo.getColor().getBar().getBottom();
+            holder.viewBinding.header.setBackgroundColor(Color.parseColor(bodyColor));
+            holder.viewBinding.descBody.setBackgroundColor(Color.parseColor(bodyColor));
         }
 
-        holder.viewBinding.name.setText(pojo.getName());
+        Glide.with(context).load(pojo.getIcon()).circleCrop().into(holder.viewBinding.largeAvatar);
+
+        holder.viewBinding.job.setText(pojo.getDescription());
         holder.viewBinding.fullName.setText(pojo.getName());
-        holder.viewBinding.job.setText(pojo.getCoName());
-        holder.viewBinding.dateJoined.setText(pojo.getUpdatedAt().getDate());
-        holder.viewBinding.description.setText(pojo.getBody());
+        holder.viewBinding.dateJoined.setText(getDate(Long.parseLong(pojo.getTimestamp())));
+        holder.viewBinding.description.setText(removeHTMLTags(pojo.getBody()));
         holder.viewBinding.starCount.setText(String.valueOf(pojo.getLikeCount()));
         holder.viewBinding.syncCount.setText(String.valueOf(pojo.getShareCount()));
         holder.viewBinding.seenCount.setText(String.valueOf(pojo.getViewCount()));
-
-        try {
-            String headerColor = pojo.getColor().getBar().getTop();
-            holder.viewBinding.header.setBackgroundColor(Color.parseColor(headerColor));
-        } catch (Exception ignored) {
-        }
-
-        try {
-            String bodyColor = pojo.getColor().getBar().getBottom();
-            holder.viewBinding.descBody.setBackgroundColor(Color.parseColor(bodyColor));
-        } catch (Exception ignored) {
-        }
 
         if (pojo.getBackgroundType() == 2) {
 
@@ -110,6 +112,17 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.ViewHo
 
         }
 
+    }
+
+    private String removeHTMLTags(String value) {
+        return value.replaceAll("\\<.*?\\>", "");
+    }
+
+    private String getDate(long time) {
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(time * 1000);
+        String date = DateFormat.format("dd MMMM yyyy", cal).toString();
+        return date;
     }
 
     public void updateMediaLayout(int width, int height, LinearLayout mediaLayout) {
