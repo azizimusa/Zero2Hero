@@ -97,10 +97,11 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.ViewHo
             holder.viewBinding.videoView.setVisibility(View.VISIBLE);
             holder.viewBinding.bg.setVisibility(View.GONE);
 
+            holder.viewBinding.mediaLayout.setBackgroundColor(Color.BLACK);
+
             Uri uri = Uri.parse(pojo.getBackgroundUrl());
 
             holder.viewBinding.videoView.setVideoURI(uri);
-            holder.viewBinding.mediaLayout.setBackgroundColor(Color.BLACK);
             holder.viewBinding.videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
